@@ -5,16 +5,17 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
+
 /**
- * `ddd-steps-list`
+ * `ddd-steps-list-item`
  * 
  * @demo index.html
- * @element ddd-steps-list
+ * @element ddd-steps-list-item
  */
-export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
+export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
-    return "ddd-steps-list";
+    return "ddd-steps-list-item";
   }
 
   constructor() {
@@ -28,7 +29,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
     this.registerLocalization({
       context: this,
       localesPath:
-        new URL("./locales/ddd-steps-list.ar.json", import.meta.url).href +
+        new URL("./locales/ddd-steps-list-item.ar.json", import.meta.url).href +
         "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
@@ -57,7 +58,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         padding: var(--ddd-spacing-4);
       }
       h3 span {
-        font-size: var(--ddd-steps-list-label-font-size, var(--ddd-font-size-s));
+        font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
       }
     `];
   }
@@ -66,7 +67,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
 <div class="wrapper">
-  basically nothing lol, just gonnna check its children to see if valid.
+  I'm info im so cool wowwww although I need to be conditionally rendered based on what is in my indexxxxxx.
 </div>`;
   }
 
@@ -79,4 +80,4 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
   }
 }
 
-globalThis.customElements.define(DddStepsList.tag, DddStepsList);
+globalThis.customElements.define(DddStepsListItem.tag, DddStepsListItem);
