@@ -70,14 +70,6 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   I'm info im so cool wowwww although I need to be conditionally rendered based on what is in my indexxxxxx.
 </div>`;
   }
-
-  /**
-   * haxProperties integration via file reference
-   */
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
-      .href;
-  }
 }
 
 globalThis.customElements.define(DddStepsListItem.tag, DddStepsListItem);
