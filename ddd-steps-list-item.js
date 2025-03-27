@@ -28,9 +28,9 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     };
     this.registerLocalization({
       context: this,
-      localesPath:
-        new URL("./locales/ddd-steps-list-item.ar.json", import.meta.url).href +
-        "/../",
+      // localesPath:
+      //   new URL("./locales/ddd-steps-list-item.ar.json", import.meta.url).href +
+      //   "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
   }
