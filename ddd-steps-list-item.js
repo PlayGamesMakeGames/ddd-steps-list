@@ -20,7 +20,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this.title = "";
+    this.header = "";
+    this.content = this.createContent();
     this.t = this.t || {};
     this.t = {
       ...this.t,
@@ -39,7 +40,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   static get properties() {
     return {
       ...super.properties,
-      title: { type: String },
+      header: { type: String },
+      content: { type: String },
     };
   }
 
@@ -60,14 +62,44 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
       h3 span {
         font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
       }
+      .header{
+        margin: var(--ddd-spacing-2);
+        padding: var(--ddd-spacing-4);
+        font-size: 32px;
+      }
+      .infoList{
+        margin: var(--ddd-spacing-1);
+        padding: var(--ddd-spacing-1);
+      }
     `];
+  }
+
+  createContent(){
+    let content = "content";
+    const infoList = document.querySelector(".infoList");
+    document.querySelectorAll("ddd-steps-list-item").forEach(item => {
+      let curContent = item.innerHTML;
+      
+      console.log(item);
+      console.log(item.innerHTML);
+      console.log("spacer");
+
+      // infoList.append(item);  NEED TO MAKE THIS APPEND EACH ITEM WHILE MAINTAINING TAG CONSTRAINTS? MAKE ANOTHER LOOP LOOPING THROUGH EACH TAG?
+      content = content + item.innerHTML;
+    });
+    return content;
   }
 
   // Lit render the HTML
   render() {
     return html`
 <div class="wrapper">
-  I'm info im so cool wowwww although I need to be conditionally rendered based on what is in my indexxxxxx.
+  <div class="header">
+    ${this.header}
+  </div>
+  <div class="infoList">
+    ${this.content}
+  </div>
 </div>`;
   }
 }
