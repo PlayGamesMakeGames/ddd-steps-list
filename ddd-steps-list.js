@@ -19,7 +19,8 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this.title = "";
+    // this.title = "";
+    this.checkChildren();
     this.t = this.t || {};
     this.t = {
       ...this.t,
@@ -38,7 +39,8 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
   static get properties() {
     return {
       ...super.properties,
-      title: { type: String },
+      // title: { type: String },
+
     };
   }
 
@@ -59,14 +61,53 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
       h3 span {
         font-size: var(--ddd-steps-list-label-font-size, var(--ddd-font-size-s));
       }
+      .circle {
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        border-radius: 50%; /* the magic */
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        text-align: center;
+        color: white;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin: 0 auto 40px;
+      }
     `];
+  }
+
+  checkChildren(){
+    console.log(this.children);
+    let arrChildren = this.children;
+    let i = 0;
+    for(i = 0; i < this.children.length; i++){
+      console.log(arrChildren[i]);
+      if(arrChildren[i].tagName.toLowerCase() != "ddd-steps-list-item"){
+        console.log("angry at " + arrChildren[i].tagName);
+        this.children[i].remove();
+        i--; //to accomodate removing the guy
+      }
+    }
+    // this.children = arrChildren;
+    console.log(this.children);
+    // this.children.forEach(item => {
+    //   console.log(item);
+    // });
+    // document.querySelectorAll("ddd-steps-list-item").forEach(item => {
+    //   console.log(item);
+    //   // console.log(item.innerHTML);
+    //   console.log("spacer");
+
+    // });
   }
 
   // Lit render the HTML
   render() {
     return html`
 <div class="wrapper">
-  basically nothing lol, just gonnna check its children to see if valid.
+  <slot></slot>
 </div>`;
   }
 
