@@ -21,7 +21,7 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.header = "";
-    this.content = this.createContent();
+    // this.content = this.createContent();
     this.t = this.t || {};
     this.t = {
       ...this.t,
@@ -41,7 +41,7 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     return {
       ...super.properties,
       header: { type: String },
-      content: { type: String },
+      // content: { type: String },
     };
   }
 
@@ -74,21 +74,21 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     `];
   }
 
-  createContent(){
-    let content = "content";
-    const infoList = document.querySelector(".infoList");
-    document.querySelectorAll("ddd-steps-list-item").forEach(item => {
-      let curContent = item.innerHTML;
+  // createContent(){
+  //   let content = "content";
+  //   const infoList = document.querySelector(".infoList");
+  //   document.querySelectorAll("ddd-steps-list-item").forEach(item => {
+  //     let curContent = item.innerHTML;
       
-      console.log(item);
-      console.log(item.innerHTML);
-      console.log("spacer");
+  //     console.log(item);
+  //     console.log(item.innerHTML);
+  //     console.log("spacer");
 
-      // infoList.append(item);  NEED TO MAKE THIS APPEND EACH ITEM WHILE MAINTAINING TAG CONSTRAINTS? MAKE ANOTHER LOOP LOOPING THROUGH EACH TAG?
-      content = content + item.innerHTML;
-    });
-    return content;
-  }
+  //     // infoList.append(item);  NEED TO MAKE THIS APPEND EACH ITEM WHILE MAINTAINING TAG CONSTRAINTS? MAKE ANOTHER LOOP LOOPING THROUGH EACH TAG?
+  //     content = content + item.innerHTML;
+  //   });
+  //   return content;
+  // }
 
   // Lit render the HTML
   render() {
@@ -98,7 +98,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     ${this.header}
   </div>
   <div class="infoList">
-    ${this.content}
+    <slot></slot>
+    <!-- ${this.content} -->
   </div>
 </div>`;
   }
