@@ -70,15 +70,26 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         -webkit-border-radius: 50%;
         text-align: center;
         color: white;
+        background-color: blue;
         font-size: 16px;
         text-transform: uppercase;
         font-weight: 700;
         margin: 0 auto 40px;
       }
+      /* if mobile keep cicles above steps, if not, put circles beside steps*/
+      /* mobile - circles above steps */
+      @media (max-width: 765px){
+
+      }
+      /* pc - circles beside step */
+      @media(min-width: 766px){
+
+      }
     `];
   }
 
   checkChildren(){
+    //remove children that are not ddd-steps-list-item
     console.log(this.children);
     let arrChildren = this.children;
     let i = 0;
@@ -90,17 +101,41 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         i--; //to accomodate removing the guy
       }
     }
+
     // this.children = arrChildren;
+    //check this.children to make sure we removed correctly
     console.log(this.children);
     // this.children.forEach(item => {
     //   console.log(item);
     // });
-    // document.querySelectorAll("ddd-steps-list-item").forEach(item => {
-    //   console.log(item);
-    //   // console.log(item.innerHTML);
-    //   console.log("spacer");
 
-    // });
+    let index = 0;
+    //insert circles with index+1 as number for numbered list of items
+    document.querySelectorAll("ddd-steps-list-item").forEach(item => {
+      console.log(item);
+      // console.log(item.innerHTML);
+      console.log("spacer");
+      let curCircle = `<div class='circle' 
+        style='
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%; /* the magic */
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        text-align: center;
+        color: white;
+        background-color: blue;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin: 0 left 40px;
+        '>
+      ${index+1}</div>`
+      //second param is evaluated html
+      item.insertAdjacentHTML("beforebegin", curCircle);
+      index = index+1;
+    });
   }
 
   // Lit render the HTML

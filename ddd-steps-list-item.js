@@ -56,20 +56,24 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         font-family: var(--ddd-font-navigation);
       }
       .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
+        margin-top: var(--ddd-spacing-5);
+        margin-bottom: var(--ddd-spacing-10);
+        /* padding: var(--ddd-spacing-4); */
       }
       h3 span {
         font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
       }
       .header{
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
+        /* margin: var(--ddd-spacing-2);
+        padding: var(--ddd-spacing-4); */
         font-size: 32px;
       }
       .infoList{
-        margin: var(--ddd-spacing-1);
-        padding: var(--ddd-spacing-1);
+        /* display: flex; */
+        /* margin: var(--ddd-spacing-1);
+        padding: var(--ddd-spacing-1); */
+        /* need this to update with one passed into ddd-steps-list */
+        color: var(--ddd-primary); 
       }
     `];
   }
