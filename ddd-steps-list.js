@@ -64,31 +64,19 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
       h3 span {
         font-size: var(--ddd-steps-list-label-font-size, var(--ddd-font-size-s));
       }
-      .circle {
-        width: 200px;
-        height: 200px;
-        line-height: 200px;
-        border-radius: 50%; /* the magic */
-        -moz-border-radius: 50%;
-        -webkit-border-radius: 50%;
-        text-align: center;
-        color: var(--lowContrast-override, white);
-        background-color: var(--ddd-theme-primary, #74a024);
-        font-size: 16px;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0 auto 40px;
-      }
-      /* if mobile keep cicles above steps, if not, put circles beside steps*/
-      /* mobile - circles above steps */
-      @media (max-width: 765px){
-
-      }
-      /* pc - circles beside step */
-      @media(min-width: 766px){
-
-      }
     `];
+  }
+
+  circleMobile(){
+    document.querySelectorAll(".circle").forEach(curCircle => {
+      curCircle.style.position = "relative";
+    });
+  }
+
+  circlePC(){
+    document.querySelectorAll(".circle").forEach(curCircle => {
+      curCircle.style.position = "absolute";
+    });
   }
 
   checkChildren(){
@@ -120,33 +108,35 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
       console.log("this.dddprimary: " + this.dddprimary);
       console.log("spacer");
       if(this.dddprimary){
-        item.setAttribute("dddprimary", this.dddprimary);
+        item.style.setProperty("--circle-color", `var(--ddd-primary-${this.dddprimary})`);
       }
-      let curCircle = `<div class='circle' 
-        style='
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 50%; /* the magic */
-        -moz-border-radius: 50%;
-        -webkit-border-radius: 50%;
-        text-align: center;
-        color: var(--lowContrast-override, white);
-        background-color: var(--ddd-primary-${this.dddprimary});
-        font-size: 16px;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0 left 40px;
-        // margin-left: calc(-1 * var(--ddd-spacing-20, 16px));
-        // margin-right: var(--ddd-spacing-4, 16px);
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // position: absolute;
-        '>
-      ${index+1}</div>`
+      item.setAttribute("stepNumber", index+1);
+      // let curCircle = `<div class='circle' 
+      //   style='
+      //   width: 50px;
+      //   height: 50px;
+      //   line-height: 50px;
+      //   border-radius: 50%; /* the magic */
+      //   -moz-border-radius: 50%;
+      //   -webkit-border-radius: 50%;
+      //   text-align: center;
+      //   color: var(--lowContrast-override, white);
+      //   background-color: var(--ddd-primary-${this.dddprimary}, var(--ddd-theme-default-nittanyNavy));
+      //   font-size: 16px;
+      //   text-transform: uppercase;
+      //   font-weight: 700;
+      //   margin-top: var(--ddd-spacing-3);
+      //   // margin: 0 left 40px;
+      //   // margin-left: calc(-1 * var(--ddd-spacing-20, 16px));
+      //   // margin-right: var(--ddd-spacing-4, 16px);
+      //   // display: flex;
+      //   // align-items: center;
+      //   // justify-content: center;
+      //   position: absolute;
+      //   '>
+      // ${index+1}</div>`
       //second param is evaluated html
-      item.insertAdjacentHTML("beforebegin", curCircle);
+      // item.insertAdjacentHTML("beforebegin", curCircle);
       index = index+1;
     });
   }

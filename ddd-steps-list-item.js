@@ -21,6 +21,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.header = "";
+    this.stepNumber = 0;
+    this.dddprimary = "0";
     // this.content = this.createContent();
     this.t = this.t || {};
     this.t = {
@@ -41,6 +43,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     return {
       ...super.properties,
       header: { type: String },
+      stepNumber: { type: Number, reflect: true },
+      dddprimary: { type: String, reflect: true },
       // content: { type: String },
     };
   }
@@ -58,8 +62,14 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
       .wrapper {
         margin-top: var(--ddd-spacing-5);
         margin-bottom: var(--ddd-spacing-10);
+        background-color: var(--ddd-theme-accent);
         /* add padding for computer version to make space for circle */
         /* padding-left: var(--ddd-spacing-20); */
+      }
+      @media (min-width: 750px) {
+        .wrapper {
+          padding-left: var(--ddd-spacing-17);
+        }
       }
       h3 span {
         font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
@@ -76,7 +86,58 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         /* need this to update with one passed into ddd-steps-list */
         color: var(--ddd-primary); 
       }
+      .circle {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%; /* the magic */
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        text-align: center;
+        color: var(--lowContrast-override, white);
+        background-color: var(--circle-color, var(--ddd-theme-default-nittanyNavy));
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 700;
+        // margin: 0 left 40px;
+        /* margin-left: calc(-1 * var(--ddd-spacing-20, -16px)); */
+        // margin-right: var(--ddd-spacing-4, 16px);
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        position: relative;
+      }
 
+      /* if mobile keep cicles above steps, if not, put circles beside steps*/
+      /* mobile - circles above steps */
+      @media (max-width: 750px){
+        .circle {
+          position: relative;
+          margin-bottom: var(--ddd-spacing-4);
+        }
+      }
+      /* pc - circles beside step */
+      @media(min-width: 750px){
+        .circle {
+          position: absolute;
+          margin-left: calc(-1 * var(--ddd-spacing-15));
+          margin-top: calc(var(--ddd-spacing-2) * -1);
+        }
+        .circle::after {
+          content: "";
+          display: block;
+          width: 2px;
+          height: 107px;
+          border-left: 2px dashed var(--circle-color, var(--ddd-theme-default-nittanyNavy));
+          position: relative;
+          /* distance between circle and line */
+          bottom: -10px;
+          /* center line under circle */
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      
     `];
   }
 
@@ -99,7 +160,9 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
-<div class="wrapper" style="background-color: var(--ddd-primary-${this.dddprimary})">
+    <!-- style="background-color: var(--ddd-primary-${this.dddprimary})" possibly in wrapper -->
+<div class="wrapper">
+  <div class="circle">${this.stepNumber}</div>
   <div class="header">
     ${this.header}
   </div>
