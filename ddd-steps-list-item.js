@@ -58,7 +58,8 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
       .wrapper {
         margin-top: var(--ddd-spacing-5);
         margin-bottom: var(--ddd-spacing-10);
-        /* padding: var(--ddd-spacing-4); */
+        /* add padding for computer version to make space for circle */
+        /* padding-left: var(--ddd-spacing-20); */
       }
       h3 span {
         font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
@@ -75,6 +76,7 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         /* need this to update with one passed into ddd-steps-list */
         color: var(--ddd-primary); 
       }
+
     `];
   }
 
@@ -97,7 +99,7 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
-<div class="wrapper">
+<div class="wrapper" style="background-color: var(--ddd-primary-${this.dddprimary})">
   <div class="header">
     ${this.header}
   </div>

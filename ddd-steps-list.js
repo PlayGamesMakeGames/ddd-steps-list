@@ -20,6 +20,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     // this.title = "";
+    this.dddprimary = "0";
     this.checkChildren();
     this.t = this.t || {};
     this.t = {
@@ -39,6 +40,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
   static get properties() {
     return {
       ...super.properties,
+      dddprimary: { type: String, reflect: true },
       // title: { type: String },
 
     };
@@ -57,6 +59,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
       .wrapper {
         margin: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-4);
+        background-color: var(--ddd-theme-accent);
       }
       h3 span {
         font-size: var(--ddd-steps-list-label-font-size, var(--ddd-font-size-s));
@@ -69,8 +72,8 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         -moz-border-radius: 50%;
         -webkit-border-radius: 50%;
         text-align: center;
-        color: white;
-        background-color: blue;
+        color: var(--lowContrast-override, white);
+        background-color: var(--ddd-theme-primary, #74a024);
         font-size: 16px;
         text-transform: uppercase;
         font-weight: 700;
@@ -114,7 +117,11 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
     document.querySelectorAll("ddd-steps-list-item").forEach(item => {
       console.log(item);
       // console.log(item.innerHTML);
+      console.log("this.dddprimary: " + this.dddprimary);
       console.log("spacer");
+      if(this.dddprimary){
+        item.setAttribute("dddprimary", this.dddprimary);
+      }
       let curCircle = `<div class='circle' 
         style='
         width: 50px;
@@ -124,18 +131,31 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         -moz-border-radius: 50%;
         -webkit-border-radius: 50%;
         text-align: center;
-        color: white;
-        background-color: blue;
+        color: var(--lowContrast-override, white);
+        background-color: var(--ddd-primary-${this.dddprimary});
         font-size: 16px;
         text-transform: uppercase;
         font-weight: 700;
         margin: 0 left 40px;
+        // margin-left: calc(-1 * var(--ddd-spacing-20, 16px));
+        // margin-right: var(--ddd-spacing-4, 16px);
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // position: absolute;
         '>
       ${index+1}</div>`
       //second param is evaluated html
       item.insertAdjacentHTML("beforebegin", curCircle);
       index = index+1;
     });
+  }
+
+  updated(changedProperties){
+    if(changedProperties.has("dddprimary")){
+      console.log("this.dddprimary: " + this.dddprimary);
+      this.checkChildren();
+    }
   }
 
   // Lit render the HTML
