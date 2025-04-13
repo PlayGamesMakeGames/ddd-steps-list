@@ -21,6 +21,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
     super();
     // this.title = "";
     this.dddprimary = "0";
+    this.childrenNum = 0;
     this.checkChildren();
     this.t = this.t || {};
     this.t = {
@@ -41,6 +42,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
     return {
       ...super.properties,
       dddprimary: { type: String, reflect: true },
+      childrenNum: { type: Number, reflect: true },
       // title: { type: String },
 
     };
@@ -81,7 +83,7 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
 
   checkChildren(){
     //remove children that are not ddd-steps-list-item
-    console.log(this.children);
+    //console.log(this.children);
     let arrChildren = this.children;
     let i = 0;
     for(i = 0; i < this.children.length; i++){
@@ -92,61 +94,38 @@ export class DddStepsList extends DDDSuper(I18NMixin(LitElement)) {
         i--; //to accomodate removing the guy
       }
     }
-
-    // this.children = arrChildren;
+    //after removing unwanted children, update the number of children (makes sure it works if someone hacks dom and adds children)
+    this.childrenNum = this.children.length;
+    
     //check this.children to make sure we removed correctly
-    console.log(this.children);
-    // this.children.forEach(item => {
-    //   console.log(item);
-    // });
+    // console.log(this.children);
 
     let index = 0;
     //insert circles with index+1 as number for numbered list of items
     document.querySelectorAll("ddd-steps-list-item").forEach(item => {
-      console.log(item);
-      // console.log(item.innerHTML);
-      console.log("this.dddprimary: " + this.dddprimary);
-      console.log("spacer");
       if(this.dddprimary){
         item.style.setProperty("--circle-color", `var(--ddd-primary-${this.dddprimary})`);
       }
       item.setAttribute("stepNumber", index+1);
-      // let curCircle = `<div class='circle' 
-      //   style='
-      //   width: 50px;
-      //   height: 50px;
-      //   line-height: 50px;
-      //   border-radius: 50%; /* the magic */
-      //   -moz-border-radius: 50%;
-      //   -webkit-border-radius: 50%;
-      //   text-align: center;
-      //   color: var(--lowContrast-override, white);
-      //   background-color: var(--ddd-primary-${this.dddprimary}, var(--ddd-theme-default-nittanyNavy));
-      //   font-size: 16px;
-      //   text-transform: uppercase;
-      //   font-weight: 700;
-      //   margin-top: var(--ddd-spacing-3);
-      //   // margin: 0 left 40px;
-      //   // margin-left: calc(-1 * var(--ddd-spacing-20, 16px));
-      //   // margin-right: var(--ddd-spacing-4, 16px);
-      //   // display: flex;
-      //   // align-items: center;
-      //   // justify-content: center;
-      //   position: absolute;
-      //   '>
-      // ${index+1}</div>`
-      //second param is evaluated html
-      // item.insertAdjacentHTML("beforebegin", curCircle);
       index = index+1;
     });
   }
 
   updated(changedProperties){
+    //update dddprimary (data-primary) for children
     if(changedProperties.has("dddprimary")){
       console.log("this.dddprimary: " + this.dddprimary);
       this.checkChildren();
     }
-  }
+    //if someone hacks dom and adds children, rerun checkChildren
+    const observer = new MutationObserver(() => {
+      if(this.children.length != this.childrenNum) {
+        console.log("children: " + this.childrenNum); 
+        this.checkChildren();
+      }
+    });
+    observer.observe(this, {childList: true});
+    }
 
   // Lit render the HTML
   render() {

@@ -63,8 +63,6 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         margin-top: var(--ddd-spacing-5);
         margin-bottom: var(--ddd-spacing-10);
         background-color: var(--ddd-theme-accent);
-        /* add padding for computer version to make space for circle */
-        /* padding-left: var(--ddd-spacing-20); */
       }
       @media (min-width: 750px) {
         .wrapper {
@@ -75,15 +73,9 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         font-size: var(--ddd-steps-list-item-label-font-size, var(--ddd-font-size-s));
       }
       .header{
-        /* margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4); */
-        font-size: 32px;
+        font-size: var(--ddd-font-size-l);
       }
       .infoList{
-        /* display: flex; */
-        /* margin: var(--ddd-spacing-1);
-        padding: var(--ddd-spacing-1); */
-        /* need this to update with one passed into ddd-steps-list */
         color: var(--ddd-primary); 
       }
       .circle {
@@ -96,15 +88,9 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         text-align: center;
         color: var(--lowContrast-override, white);
         background-color: var(--circle-color, var(--ddd-theme-default-nittanyNavy));
-        font-size: 16px;
+        font-size: var(--ddd-font-size-s);
         text-transform: uppercase;
-        font-weight: 700;
-        // margin: 0 left 40px;
-        /* margin-left: calc(-1 * var(--ddd-spacing-20, -16px)); */
-        // margin-right: var(--ddd-spacing-4, 16px);
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
+        font-weight: var(--ddd-font-weight-bold);
         position: relative;
       }
 
@@ -121,7 +107,7 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
         .circle {
           position: absolute;
           margin-left: calc(-1 * var(--ddd-spacing-15));
-          margin-top: calc(var(--ddd-spacing-2) * -1);
+          margin-top: calc(var(--ddd-spacing-0) * -1);
         }
         .circle::after {
           content: "";
@@ -141,21 +127,14 @@ export class DddStepsListItem extends DDDSuper(I18NMixin(LitElement)) {
     `];
   }
 
-  // createContent(){
-  //   let content = "content";
-  //   const infoList = document.querySelector(".infoList");
-  //   document.querySelectorAll("ddd-steps-list-item").forEach(item => {
-  //     let curContent = item.innerHTML;
-      
-  //     console.log(item);
-  //     console.log(item.innerHTML);
-  //     console.log("spacer");
-
-  //     // infoList.append(item);  NEED TO MAKE THIS APPEND EACH ITEM WHILE MAINTAINING TAG CONSTRAINTS? MAKE ANOTHER LOOP LOOPING THROUGH EACH TAG?
-  //     content = content + item.innerHTML;
-  //   });
-  //   return content;
-  // }
+  // If stepNumber updated, rerun checkChildren (makes sure it is the right number)
+  updated(changedProperties){
+    if(changedProperties.has("stepNumber")){
+      if(this.parentElement.tagName.toLowerCase() == "ddd-steps-list"){
+        this.parentElement.checkChildren();
+      }
+    }
+  }
 
   // Lit render the HTML
   render() {
